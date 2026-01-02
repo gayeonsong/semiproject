@@ -2,9 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>home.html</title>
 </head>
 <body>
 <h1>home</h1>
+
+<!--아래 방식으로 넣어주시면 됩니다.~-->
+<!--<div th:replace="~{fragments/hqLayout::hqLayout(~{this::header},~{this::body})}"></div>-->
+
+<!--<div th:fragment="header">-->
+<!--    <p>header~~ 이렇게 header넣어주세요~</p>-->
+<!--</div>-->
+<!--<div th:fragment="body">-->
+<!--    <p>body~~ 여기 안에 내용 넣어주세요~</p>-->
+<!--</div>-->
+
 </body>
 </html>
