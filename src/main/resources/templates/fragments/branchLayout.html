@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:fragment="branchLayout(header,body)">
+<th:block th:fragment="branchLayout(layoutHeader,layoutBody)">
     <head>
         <meta charset="UTF-8">
         <title>fragments/branchLayout.html</title>
         <link rel="stylesheet" th:href="@{/css/layout.css}">
     </head>
     <body>
-    <div id="wrap">
-        <div id="hq">
-            <p id="p1">편의점 시스템</p>
-            <p id="p2">(가맹점)</p>
+    <div id="layoutWrap">
+        <div id="sidebar">
+            <p id="sidebarHeaderP1">편의점 시스템</p>
+            <p id="sidebarHeaderP2">(가맹점)</p>
             <hr>
-            <ul>
-                <li><a th:href="@{/test}">발주요청</a></li>
-                <li><a th:href="@{/test}">발주내역</a></li>
-            </ul>
-            <a th:href="@{/test}" id="logout">로그아웃</a>
-        </div>
-        <div id="content">
-            <div id="header">
-                <div th:replace="${header}"></div>
+            <div id="sidebar-navigation">
+                <ul class="sidebar-list">
+                    <li class="sidebar-item"><a th:href="@{/test}">발주요청</a></li>
+                    <li class="sidebar-item"><a th:href="@{/test}">발주내역</a></li>
+                </ul>
             </div>
-            <div id="body">
-                <div th:replace="${body}"></div>
+            <a th:href="@{/test}" id="sidebarLogout">로그아웃</a>
+        </div>
+        <div id="layoutContent">
+            <div id="layoutHeader">
+                <div th:replace="${layoutHeader}"></div>
+            </div>
+            <div id="layoutBody">
+                <div th:replace="${layoutBody}"></div>
             </div>
         </div>
     </div>
