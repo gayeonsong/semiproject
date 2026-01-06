@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>store/update.html</title>
+</head>
+<body>
+<div th:replace="fragment/layout::header('가맹점 수정','가맹점 정보를 수정합니다')"></div>
+<form th:action="@{/store/update}" method="post" id="updateForm">
+  <div>
+    <h3>가맹점 기본 정보</h3><hr><br>
+    <span>가맹점 번호</span><br>
+    <input type="text" id="store_id" name="store_id" th:value="${id}" readonly><br>
+    <input type="hidden" name="store_id" th:value="${id}">
+    <span>가맹점명</span><br>
+    <input type="text" id="store_name" name="store_name" th:value="${store.store_name}" readonly><br>
+    <label>가맹점 상태</label><br>
+    <select name="store_status">
+      <option value="1"
+              th:selected="${store.store_status == 1}">활성</option>
+      <option value="0"
+              th:selected="${store.store_status == 0}">비활성</option>
+    </select><br>
+    <span>수수료율</span><br>
+    <input type="number" id="commission_rate" name="commission_rate" min="0" max="100" th:value="${store.commission_rate}" step="0.1" required>%<br>
+  </div>
+  <div>
+    <h3>점주정보</h3><hr><br>
+    <input type="hidden" name="owner_id" th:value="${store.owner_id}">
+    <span>점주명</span><br>
+    <input type="text" id="owner_name" name="owner_name" th:value="${store.owner_name}"><br>
+    <span>점주 전화번호</span><br>
+    <input type="text" id="owner_phone" name="owner_phone" th:value="${store.owner_phone}"><br>
+  </div>
+  <div>
+    <h3>계정정보</h3><hr><br>
+    <input type="hidden" name="user_id" th:value="${store.user_id}">
+    <span>아이디</span><br>
+    <input type="text" id="login_id" name="login_id" th:value="${store.login_id}" readonly><br>
+    <span>비밀번호</span><br>
+    <input type="password" id="password" name="password" placeholder="변경 시에만 입력" ><br>
+    <span class="error" id="passwordMsg"></span><br>
+  </div>
+  <div>
+    <input type="submit" value="수정">
+    <button type="button" onclick="history.back()">취소</button>
+  </div>
+</form>
+<script th:inline="javascript">
+  const msg= /*[[${msg}]]*/ null;
+  if(msg) {
+    alert(msg);
+    window.location.href="/store";
+  }
+</script>
+
+</body>
+</html>

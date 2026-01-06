@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.store.mapper.StoreMapper">
+    <insert id="StoreInsert" parameterType="com.example.demo.store.dto.StoreDto">
+        <selectKey keyProperty="store_id" resultType="int" order="BEFORE">
+            select seq_store.nextval from dual
+        </selectKey>
+        insert into store values(#{store_id},#{store_name},#{store_status},#{commission_rate})
+    </insert>
+    <select id="ListStores" resultType="StoreListDto">
+        select store_id,s.store_name,s.store_status,s.commission_rate,o.owner_name
+        from store s join owner o
+        using(store_id)
+    </select>
+
+    <select id="StoreDetail" parameterType="int" resultType="StoreDetailDto">
+        select store_id, store_name,store_status,commission_rate,owner_name,owner_phone
+        from store s join owner o
+        using(store_id)
+        where store_id=#{store_id}
+    </select>
+    <select id="StoreUpdateForm" parameterType="int" resultType="StoreUpdateDto">
+        select s.store_id,
+        s.store_name,
+        s.store_status,
+        s.commission_rate,
+        o.owner_id,
+        o.owner_name,
+        o.owner_phone,
+        l.user_id,
+        l.login_id,
+        l.password
+        from store s
+        join owner o on s.store_id = o.store_id
+        join login l on o.user_id = l.user_id  <!-- owner.user_id로 join -->
+        where s.store_id = #{store_id}
+    </select>
+    <update id="StoreUpdate" parameterType="StoreUpdateDto">
+        update store
+        set store_status = #{store_status, jdbcType=INTEGER},
+        commission_rate = #{commission_rate, jdbcType=DOUBLE}
+        where store_id = #{store_id, jdbcType=INTEGER}
+    </update>
+    <select id="searchStores" parameterType="string" resultType="StoreListDto">
+        select store_id,s.store_name,s.store_status,s.commission_rate,o.owner_name
+        from store s join owner o
+        using(store_id)
+        where store_name like '%' || #{keyword} || '%'
+    </select>
+    <select id="filterStores" parameterType="int" resultType="StoreListDto">
+        select store_id,s.store_name,s.store_status,s.commission_rate,o.owner_name
+        from store s join owner o
+        using(store_id)
+        where s.store_status = #{status}
+
+    </select>
+
+
+</mapper>

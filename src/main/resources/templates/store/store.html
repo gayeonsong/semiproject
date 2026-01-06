@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>store.html</title>
+</head>
+<body>
+<h2 th:replace="~{fragment/layout::header('가맹점 관리','가맹점 정보 및 상태를 관리합니다')}"></h2>
+<a th:href="@{/store/insert}">가맹점등록</a>
+<form th:action="@{/store/search}" method="get">
+    <h3>검색 및 필터</h3><hr><br>
+    <input type="text" id="keyword" placeholder="가맹점명을 입력하세요">
+    <input type="submit" value="조회" id="searchBtn">
+</form>
+<div id="filterBtn">
+    <button type="button" data-status="all">전체</button>
+    <button type="button" data-status="1">활성</button>
+    <button type="button" data-status="0">비활성</button>
+</div>
+<div>
+    <div>
+        <h3>가맹점 목록</h3><hr><br>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>가맹점명</th><th>점주명</th><th>상태</th><th>수수료율</th><th>관리</th>
+            </tr>
+        </thead>
+        <tbody id="searchStoreTable">
+            <tr th:each="store : ${list}">
+                <td th:text="${store.store_name}"></td>
+                <td th:text="${store.owner_name}"></td>
+                <td th:text="${store.store_status == 1 ? '활성' : '비활성'}"></td>
+                <td th:text="${store.commission_rate}+ '%' "></td>
+                <td><a th:href="@{/store/detail/{id}(id=${store.store_id})}">상세</a></td>
+                <td><a th:href="@{/store/update/{id}(id=${store.store_id})}">수정</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    document.getElementById("searchBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+        const keyword=document.getElementById("keyword").value;
+        fetch(`/store/search?keyword=${keyword}`)
+            .then(resp=>resp.json())
+            .then(data=> updateTable(data));
+    })
+
+    const filterBtn=document.querySelectorAll("#filterBtn button");
+    filterBtn.forEach(btn=> {
+        btn.addEventListener("click", function () {
+            const status=this.dataset.status;
+            fetch(`/store/filter?status=${status}`)
+                .then(resp=>resp.json())
+                .then(data=>{updateTable(data);
+                })
+        })
+    })
+    function updateTable(list) {
+        const tbody=document.getElementById("searchStoreTable");
+        tbody.innerHTML="";
+        list.forEach(store=>{
+            const tr=document.createElement("tr");
+            tr.innerHTML=`
+                        <td>${store.store_name}</td>
+                        <td>${store.owner_name}</td>
+                        <td>${store.store_status == 1 ? '활성' : '비활성'}</td>
+                        <td>${store.commission_rate}%</td>
+                        <td><a href="/store/detail/${store.store_id}">상세</a></td>
+                        <td><a href="/store/update/${store.store_id}">수정</a></td>
+                    `;
+            tbody.appendChild(tr);
+        })
+    }
+
+
+
+
+</script>
+</body>
+</html>
