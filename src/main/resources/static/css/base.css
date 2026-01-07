@@ -265,7 +265,19 @@
     box-shadow: var(--shadow-md);
 }
 
+.alert-title {
+    margin-bottom: var(--spacing-3);
+    font-size: var(--font-lg);
+    border-bottom: var(--border-default);
+    padding-bottom: var(--spacing-2);
+}
 
+
+.alert-header {
+    font-weight: 600;
+    margin-bottom: var(--spacing-1);
+    color: #f57c00;
+}
 
 
 

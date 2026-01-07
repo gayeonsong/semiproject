@@ -3,7 +3,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,15 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
     private final UserService userService;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
@@ -51,6 +47,7 @@ public class LoginController {
             return "redirect:/main";
         }
     }
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();

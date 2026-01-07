@@ -9,14 +9,14 @@
        <selectKey keyProperty="userId" resultType="int" order="BEFORE">
            select seq_login.nextval from dual
        </selectKey>
-        INSERT INTO login (user_id,login_id, BCrypt{password}, role)
-        VALUES (seq_login.NEXTVAL,#{loginId}, #{password}, #{role})
+        INSERT INTO login (user_id,login_id, password, role)
+        VALUES (#{userId},#{loginId}, #{password}, #{role})
     </insert>
 
 
     <!-- 2. 로그인 체크 -->
     <select id="loginCheckByLoginId" parameterType="String" resultType="UserDTO">
-        SELECT user_id, login_id,password,role
+        SELECT user_id AS userId, login_id AS loginId, password, role
         FROM login
         WHERE login_id = #{loginId} <!-- 여기서 #{loginId}는 string 파라미터 자체 -->
 
