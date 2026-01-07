@@ -41,7 +41,7 @@ public class LoginController {
         session.setAttribute("loginId", loginUser.getLoginId());
         session.setAttribute("role", loginUser.getRole());
         if (loginUser.getRole() == 1) {
-            return "redirect:/store";
+            return "redirect:/store_test";
 
         } else {
             return "redirect:/main";

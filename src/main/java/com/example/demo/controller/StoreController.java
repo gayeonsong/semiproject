@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class StoreController {
 
-    @GetMapping("/store")
+    @GetMapping("/store_test")
     public String store(Model model){
-        return "board/store";
+        return "board/store_test";
     }
 }

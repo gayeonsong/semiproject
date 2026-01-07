@@ -4,6 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <title>fragments/hqLayout.html</title>
+        <link rel="stylesheet" th:href="@{/css/variables.css}">
+        <link rel="stylesheet" th:href="@{/css/base.css}">
         <link rel="stylesheet" th:href="@{/css/layout.css}">
     </head>
     <body>
@@ -26,7 +28,8 @@
             <a th:href="@{/logout}" id="sidebarLogout">로그아웃</a>
         </div>
         <main id="layoutContent">
-            <div id="layoutBody">
+            <div class="summary-grid">
+
                 <div class="btn">
                     <p><a th:href="@{/}">가맹점 수</a></p>
                 </div>
@@ -42,10 +45,21 @@
                 </div>
 
             </div>
-
-            <h2>알림</h2>
-
-
+            <div class="summary-card">
+            <div  class="alert-header">
+                <h2>알림</h2>
+            </div>
+            <div>
+                <!--알림이 없는 상태-->
+                <p>현재 알림정보가 없습니다.</p>
+            </div>
+            <ul class="list">
+                <!--알람이 있을 경우-->
+                <li th:each="notification : ${notifications}"></li>
+                <a href="@"></a>
+                <span>알림 제목</span>
+            </ul>
+            </div>
         </main>
 
     </div>
