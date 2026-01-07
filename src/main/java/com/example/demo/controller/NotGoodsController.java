@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class NotGoodsController {
 
+
+
 @GetMapping("/board/notgoods")
 public String list(){
     return ("board/notgoods");

@@ -25,7 +25,7 @@
     <!-- 3. 검색 조건 -->
     <sql id="search">
         <where>
-            <if test= "keyword != null and keyword != ''and filed == 'login_id' ">
+            <if test= "keyword != null and keyword != ''and field == 'login_id' ">
                   AND login_id LIKE '%' || #{keyword} || '%'
                     </if>
                     <if test = "role != null">
