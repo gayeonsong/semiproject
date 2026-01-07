@@ -1,0 +1,20 @@
+package com.example.demo.controller;
+
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+@RequiredArgsConstructor
+public class NotGoodsController {
+
+@GetMapping("/board/notgoods")
+public String list(){
+    return ("board/notgoods");
+}
+
+}
+
+
+

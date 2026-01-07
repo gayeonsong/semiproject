@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>board/store.html</title>
+<!--    <link rel="stylesheet" th:href="@{/css/variables.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/css/base.css}">-->
+</head>
+<body>
+<div class="layout">
+    <nav class="sidebar">
+        <div class="sidebar-title">편의점 시스템<br>본사</div>
+        <ul class="menu-group-title">
+            <li><a th:href="@{/main}">메인</a></li>
+            <li><a th:href="@{/board/goods}">상품관리</a></li>
+            <li><a th:href="@{/}">입출고 관리</a></li>
+            <li><a th:href="@{/board/notgoods}">상품폐기</a></li>
+            <li><a th:href="@{/}">재고현황</a></li>
+            <li><a th:href="@{/board/store}">가맹점관리</a></li>
+            <li><a th:href="@{/}">이력/통계></a></li>
+        </ul>
+        <div class="logout-area">
+            <a th:href="@{/}">로그아웃</a>
+        </div>
+    </nav>
+    </div>
+</body>
+</html>

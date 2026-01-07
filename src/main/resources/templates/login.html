@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login.html</title>
+
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+
+
+</head>
+<body>
+
+    <div class="auth-width">
+        <h1 class="login-title ">관리 시스템</h1>
+        <ul class="box login-box">
+            <form method="get" th:action="@{/main}">
+            <h3>로그인</h3>
+
+            <div>
+            <label>아이디</label>
+            <input type="text" name="id">
+            </div>
+
+            <div>
+           <label>비밀번호</label>
+            <input type="password" name="pwd">
+            </div>
+
+            <div>
+            <br><input type="submit" value="로그인">
+            </div>
+                <div th:if="${error!=null}>
+                    [[${error}]]
+                    </div>
+            </form>
+        </ul>
+    </div>
+    <div>
+
+    </div>
+
+</body>
+</html>

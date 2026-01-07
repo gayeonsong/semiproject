@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>board/notgoods.html</title>
+  <link rel="stylesheet" th:href="@{/css/variables.css}">
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-title">편의점 시스템<br>본사</div>
+    <ul class="menu-group-title">
+      <li><a th:href="@{/main}">메인</a></li>
+      <li><a th:href="@{/board/goods}">상품관리</a></li>
+      <li><a th:href="@{/}">입출고 관리</a></li>
+      <li><a th:href="@{/board/notgoods}">상품폐기</a></li>
+      <li><a th:href="@{/}">재고현황</a></li>
+      <li><a th:href="@{/board/store}">가맹점관리</a></li>
+      <li><a th:href="@{/}">이력/통계></a></li>
+    </ul>
+    <div class="logout-area">
+      <a th:href="@{/}">로그아웃</a>
+    </div>
+  </nav>
+  <main class="main-content">
+    <div>
+      <div>
+      <h1>상품폐기</h1>
+      <br><h3>폐기목록</h3>
+    </div>
+
+  <table class="list">
+    <thead>
+    <tr>
+      <th>상품명</th> <th>카테고리</th> <th>수량</th> <th>등록일</th><th>폐기</th>
+    </tr>
+
+    <tr th:each="notgoods:${notgoodsList}">
+      <td th:text="${notgood}"></td>
+      <td th:text="${notgood}"></td>
+      <td><a th:herf="">폐기</a></td>
+    </tr>
+    </thead>
+  <tbody>
+    <tr th:if="${notgoodsList == null or notgoodsList.isEmpty()}">
+      <td colspan="7" style="text-align:center; padding:40px; color:var(--text-muted);">
+        등록된 상품이 없습니다.
+      </td>
+    </tr>
+  </tbody>
+  </table>
+    </div>
+  </main>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function (){
+    $('.menu-group-title a') .click(function (e){
+      e.preventDefault();
+      var url = $(this).attr('href');
+      $('.main-content').load(url + ' .main-content');
+    });
+  });
+</script>
+
+</body>
+
+</html>
