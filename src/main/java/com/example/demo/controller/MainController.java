@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
 
-    @GetMapping("/board/main")
+    @GetMapping("/main")
     public String main(Model model){
           return "board/main";
     }
