@@ -1,10 +1,8 @@
-package com.example.demo.store.mapper;
+package com.example.demo.mapper;
 
-import com.example.demo.store.dto.OwnerDto;
-import com.example.demo.store.dto.StoreUpdateDto;
+import com.example.demo.dto.OwnerDto;
+import com.example.demo.dto.StoreUpdateDto;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface OwnerMapper {

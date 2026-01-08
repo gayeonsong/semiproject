@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.store.mapper.StoreMapper">
-    <insert id="StoreInsert" parameterType="com.example.demo.store.dto.StoreDto">
+<mapper namespace="com.example.demo.mapper.StoreMapper">
+    <insert id="StoreInsert" parameterType="com.example.demo.dto.StoreDto">
         <selectKey keyProperty="store_id" resultType="int" order="BEFORE">
             select seq_store.nextval from dual
         </selectKey>
@@ -54,7 +54,6 @@
         from store s join owner o
         using(store_id)
         where s.store_status = #{status}
-
     </select>
 
 

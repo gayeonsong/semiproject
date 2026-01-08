@@ -1,8 +1,8 @@
-package com.example.demo.store.service;
+package com.example.demo.service;
 
-import com.example.demo.store.dto.OwnerDto;
-import com.example.demo.store.dto.StoreUpdateDto;
-import com.example.demo.store.mapper.OwnerMapper;
+import com.example.demo.dto.OwnerDto;
+import com.example.demo.dto.StoreUpdateDto;
+import com.example.demo.mapper.OwnerMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

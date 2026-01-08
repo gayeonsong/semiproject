@@ -1,4 +1,4 @@
-package com.example.demo.store.dto;
+package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,4 +12,5 @@ public class LoginDto {
     private String login_id;
     private String password;
     private int role;
+
 }

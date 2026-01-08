@@ -1,9 +1,9 @@
-package com.example.demo.store.service;
+package com.example.demo.service;
 
-import com.example.demo.store.dto.LoginDto;
-import com.example.demo.store.dto.OwnerDto;
-import com.example.demo.store.dto.StoreDto;
-import com.example.demo.store.dto.StoreUpdateDto;
+import com.example.demo.dto.StoreLoginDto;
+import com.example.demo.dto.OwnerDto;
+import com.example.demo.dto.StoreDto;
+import com.example.demo.dto.StoreUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,15 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class StoreRegisterService {
-    private final LoginService loginService;
+    private final StoreLoginService storeLoginService;
     private final StoreService storeService;
     private final OwnerService ownerService;
     @Transactional
-    public void register(LoginDto loginDto, StoreDto storeDto, OwnerDto ownerDto) {
-        loginService.LoginInsert(loginDto);
+    public void register(StoreLoginDto storeLoginDto, StoreDto storeDto, OwnerDto ownerDto) {
+        storeLoginService.LoginInsert(storeLoginDto);
         storeService.StoreInsert(storeDto);
 
-        ownerDto.setUser_id(loginDto.getUser_id());
+        ownerDto.setUser_id(storeLoginDto.getUser_id());
         ownerDto.setStore_id(storeDto.getStore_id());
 
         ownerService.OwnerInsert(ownerDto);
@@ -28,7 +28,7 @@ public class StoreRegisterService {
     public void Update(StoreUpdateDto dto) {
 
         if(dto.getPassword() !=null && !dto.getPassword().isBlank()) {
-            loginService.LoginUpdate(dto);
+            storeLoginService.LoginUpdate(dto);
         }
         ownerService.OwnerUpdate(dto);
         storeService.StoreUpdate(dto);

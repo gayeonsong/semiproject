@@ -1,8 +1,8 @@
-package com.example.demo.store.controller;
+package com.example.demo.controller;
 
-import com.example.demo.store.dto.StoreUpdateDto;
-import com.example.demo.store.service.StoreRegisterService;
-import com.example.demo.store.service.StoreService;
+import com.example.demo.dto.StoreUpdateDto;
+import com.example.demo.service.StoreRegisterService;
+import com.example.demo.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

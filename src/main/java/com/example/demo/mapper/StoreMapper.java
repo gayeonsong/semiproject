@@ -1,9 +1,9 @@
-package com.example.demo.store.mapper;
+package com.example.demo.mapper;
 
-import com.example.demo.store.dto.StoreDetailDto;
-import com.example.demo.store.dto.StoreDto;
-import com.example.demo.store.dto.StoreListDto;
-import com.example.demo.store.dto.StoreUpdateDto;
+import com.example.demo.dto.StoreDetailDto;
+import com.example.demo.dto.StoreDto;
+import com.example.demo.dto.StoreListDto;
+import com.example.demo.dto.StoreUpdateDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
