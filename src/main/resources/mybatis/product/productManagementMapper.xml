@@ -59,4 +59,23 @@
     <select id="selectRowCount" resultType="int">
         select count(*) from product
     </select>
+
+    <update id="updateProductInfo" parameterType="ProductManagementDto">
+        update product
+        <set>
+            <if test="category_id!=null and category_id!=0">
+                category_id=#{category_id},
+            </if>
+            <if test="image_path!=null">
+                image_path=#{image_path},
+            </if>
+            <if test="hq_supply_price!=null and hq_supply_price!=0">
+                hq_supply_price=#{hq_supply_price},
+            </if>
+            <if test="safety_stock!=null and safety_stock!=0">
+                safety_stock=#{safety_stock}
+            </if>
+        </set>
+        where product_id=#{product_id}
+    </update>
 </mapper>

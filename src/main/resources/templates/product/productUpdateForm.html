@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{fragments/hqLayout::hqLayout(~{this::layoutHeader},~{this::layoutBody})}">
+    <div th:fragment="layoutHeader">
+        <p>상품 수정</p>
+        <p>상품 정보를 수정합니다.</p>
+    </div>
+    <div th:fragment="layoutBody">
+        <style>
+            #box1, #box2, #box3{width: 80%; background-color:oklch(0.99 0.003 85);display: flex; flex-direction: column; gap: 1em; height: fit-content;padding: 1em 1em; margin-bottom: 1em}
+            img{width: 100px; height: 100px;}
+            .imgbox{background-color:oklch(0.94 0.006 80);  display: flex; align-items: center}
+        </style>
+        <form method="post" th:action="@{/product/productInfoUpdate}" enctype="multipart/form-data" th:object="${productDto}">
+            <div id="box1">
+                <p>기본정보</p>
+                <hr>
+                <div>
+                    <p>상품번호</p>
+                    <input type="hidden" th:field="*{product_id}">
+                    <input type="text" th:field="*{product_id}" disabled="disabled" >
+                </div>
+                <div>
+                    <p>카테고리</p>
+                    <select name="parentCategory" id="parentCategory" >
+                        <option th:each="p:${parentCategoryList}" th:text="${p.category_name}" th:value="${p.category_name}"
+                                th:selected="${productDto.parentCategoryName == p.category_name}"></option>
+                    </select>
+                    <select name="childCategory" id="childCategory">
+                    </select>
+                    <select name="subCategory" id="subCategory">
+                    </select>
+                </div>
+                <div>
+                    <p>현재 이미지</p>
+                    <div class="imgbox"><img th:src="@{/product/showProductImage(image_path=${productDto.image_path})}">
+                        [[${productDto.product_name}]][[${productDto.image_path.substring(productDto.image_path.lastIndexOf("."))}]]</div>
+                    <input type="hidden" th:field="*{image_path}">
+                </div>
+                <div >
+                    <p>이미지 변경</p>
+                    <input type="file" name="newImgFile" class="imgbox">
+                </div>
+            </div>
+            <div id="box2">
+                <p>가격정보</p>
+                <hr>
+                <div>
+                    <p>상품 판매가격</p>
+                    <input type="number" th:field="*{hq_supply_price}">
+                </div>
+            </div>
+            <div id="box3">
+                <p>재고정보</p>
+                <hr>
+                <div>
+                    <p>현재재고수량</p>
+                    <input type="number" th:field="*{hq_quantity}" disabled="disabled">
+                </div>
+                <div>
+                    <p>안전재고수량</p>
+                    <input type="number" th:field="*{safety_stock}">
+                </div>
+            </div>
+            <input type="submit" value="수정">
+            <button><a th:href="@{/product/productManagement}">목록으로</a></button>
+        </form>
+        <script th:inline="javascript">
+            window.selectedChildOpt=/*[[${productDto.childCategoryName}]]*/'';
+            window.selectedsubOpt=/*[[${productDto.category_name}]]*/'';
+
+        </script>
+        <script th:src="@{/js/category.js}"></script>
+    </div>
+
+
+</div>
+</html>

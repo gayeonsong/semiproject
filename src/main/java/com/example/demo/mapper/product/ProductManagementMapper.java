@@ -14,4 +14,5 @@ public interface ProductManagementMapper {
     int barcodeExist(String barcode);
     int selectRowCount();
     ProductManagementListDto selectItem(int product_id);
+    int updateProductInfo(ProductManagementDto dto);
 }

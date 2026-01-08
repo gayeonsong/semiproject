@@ -7,11 +7,14 @@
     </div>
     <div th:fragment="layoutBody" style="display: flex; flex-direction: row;text-align: center">
         <style>
-            #box1{width: 30%; background-color:oklch(0.99 0.003 85); margin-right: 1em }
+            #box1{width: 30%; background-color:oklch(0.99 0.003 85); margin-right: 1em; height: fit-content }
             img{width: 150px; height: 150px;}
             .box1Text{width:50%;padding-top: 0.7em}
-            #box2{width: 65%; background-color:oklch(0.99 0.003 85);}
+            #bigbox{display: flex; flex-direction: column; gap: 1em; width: 65%;}
+            #box2, #box3, #box4{ background-color:oklch(0.99 0.003 85); text-align: left; padding: 1em 1em; display: flex; flex-direction: column ;gap: 1em; height: fit-content; }
+            #btn{text-align: left}
         </style>
+
         <div id="box1">
             <img th:src="@{/product/showProductImage(image_path=${productDetail.image_path})}" >
             <div class="box1Text">
@@ -23,7 +26,43 @@
                 <p th:if="${productDetail.status=='품절'?'color:red':''}">[[${productDetail.status}]]</p>
             </div>
         </div>
-        <div id="box2">
+        <div id="bigbox">
+            <div id="box2">
+                <p>기본정보</p>
+                <hr>
+                <div>
+                    <p>상품명</p>
+                    <p>[[${productDetail.product_name}]]</p>
+                </div>
+                <div>
+                    <p>카테고리</p>
+                    <p>[[${productDetail.parentCategoryName}]] > [[${productDetail.childCategoryName}]] > [[${productDetail.category_name}]]</p>
+                </div>
+            </div>
+            <div id="box3">
+                <p>가격정보</p>
+                <hr>
+                <div>
+                    <p>판매단가</p>
+                    <p>[[${productDetail.hq_supply_price}]]</p>
+                </div>
+            </div>
+            <div id="box4">
+                <p>재고정보</p>
+                <hr>
+                <div>
+                    <p>현재재고수량</p>
+                    <p>[[${productDetail.hq_quantity}]]</p>
+                </div>
+                <div>
+                    <p>안전재고수량</p>
+                    <p>[[${productDetail.safety_stock}]]</p>
+                </div>
+            </div>
+            <div id="btn">
+                <button><a th:href="@{/product/productUpdateForm(product_id=${productDetail.product_id})}">수정</a></button>
+                <button><a th:href="@{/product/productManagement}">목록으로</a></button>
+            </div>
 
         </div>
     </div>

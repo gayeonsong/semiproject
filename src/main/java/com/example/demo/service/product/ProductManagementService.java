@@ -42,4 +42,8 @@ public class ProductManagementService {
     public ProductManagementListDto selectItem(int product_id){
         return mapper.selectItem(product_id);
     }
+
+    public int updateProductInfo(ProductManagementDto dto){
+        return mapper.updateProductInfo(dto);
+    }
 }

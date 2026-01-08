@@ -9,7 +9,7 @@
         <style>
             span{color: red; font-size: 0.8em}
         </style>
-        <form method="post" th:action="@{/product/insert}" enctype="multipart/form-data" th:object="${producRequestDto}">
+        <form method="post" th:action="@{/product/insert}" enctype="multipart/form-data" th:object="${productDto}">
             <div style="margin: 1em 0em;">
                 <h4>상품 기본 정보</h4>
                 <hr>
@@ -24,20 +24,23 @@
                 </label>
                 <label>
                     <p>카테고리</p>
-                    <select id="parentCategory" name="parentCategory" style="width: 100px">
-                        <option th:each="l:${list}" th:value="${l.category_name}" th:text="${l.category_name}"></option>
+                    <select id="parentCategory" name="parentCategory" th:field="*{parentCategoryName}">
+                        <option th:each="l:${parentCategoryList}" th:value="${l.category_name}" th:text="${l.category_name}"></option>
                     </select>
-                    <select id="childCategory" style="width: 100px">
+                    <select id="childCategory" name="childCategory" th:field="*{childCategoryName}">
                     </select>
                     </select>
-                    <select id="subCategory" name="category_name" style="width: 100px" th:field="*{category_name}">
+                    <select id="subCategory" name="subCategory" th:field="*{subCategoryName}" >
                     </select>
-                    <span th:if="${#fields.hasErrors('category_name')}" th:errors="*{category_name}"></span>
+                    <span th:if="${#fields.hasErrors('subCategoryName')}" th:errors="*{subCategoryName}"></span>
                 </label>
                 <label>
                     <p>상품이미지</p>
-                   <input type="file" id="img" name="file1">
-                    <span>[[${err}]]</span>
+                    <span>
+                        <input type="file" id="img" name="file1" style="display: none" onchange="updateFile(this)" >
+                        <button type="button" onclick="document.getElementById('img').click()">파일선택</button>
+                        <span id="display" th:text="${tempImg!=null?tempImg:'파일을 선택하세요'}"></span>
+                    </span>
                 </label>
             </div>
             <div style="margin: 2em 0em">
@@ -59,6 +62,15 @@
         </form>
 
         <script th:inline="javascript">
+            function updateFile(input){
+                const display=document.getElementById('display');
+                if(input.files && input.files[0]){
+                    const filename=input.files[0].name;
+                    display.innerText=filename;
+
+                }
+            }
+
             /*<![CDATA[*/
             function getProductInfo() {
                 const barcode = document.getElementById("barcode");
@@ -79,6 +91,8 @@
                                 } else {
                                     alert("등록되지 않은 바코드입니다.")
                                     document.getElementById("productName").value = "";
+                                    barcode.value="";
+                                    barcode.focus();
                                 }
                             })
                         }
@@ -86,50 +100,10 @@
             }
             /*]]>*/
 
-            function updateCategory() {
-                if (!parentCategory || parentCategory === "") return;
-                fetch(`/product/childCategory?parentCategory=${parentCategory.value}`)
-                    .then(resp => resp.json())
-                    .then(data => {
-                        let opt = "";
-                        const childCategory = document.getElementById("childCategory");
-                        data.forEach(i => {
-                            opt += `<option value='${i.childCategoryName}'>${i.childCategoryName}</option>`
-                        })
-                        childCategory.innerHTML = opt
-                        updateSubCategory();
-                    })
-            }
-
-            function updateSubCategory(){
-                if(!childCategory || childCategory==="") return
-                fetch(`/product/subCategory?childCategory=${childCategory.value}`)
-                    .then(resp=>resp.json())
-                    .then(data=>{
-                        let opt="";
-                        console.log(data)
-                        data.forEach(i=>{
-                            opt+=`<option value="${i.subCategoryName}">${i.subCategoryName}</option>`
-                        })
-                        subCategory.innerHTML=opt;
-                    })
-            }
-
-            if(parentCategory) {
-                updateCategory();
-                parentCategory.addEventListener('change',updateCategory)
-            }
-            if(childCategory) {
-                childCategory.addEventListener('change',updateSubCategory)
-            }
-
-            (function(){
-                const msg=[[${result}]]
-                if(msg!=null && msg!="" &&msg.includes("완료") ){
-                    alert(msg)
-                }
-            })();
+            window.selectedChildOpt=/*[[${productDto.childCategoryName}]]*/'';
+            window.selectedsubOpt=/*[[${productDto.subCategoryName}]]*/'';
         </script>
+        <script th:src="@{/js/category.js}"></script>
     </div>
 </div>
 
