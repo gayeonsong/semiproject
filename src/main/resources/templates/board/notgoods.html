@@ -1,35 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>board/notgoods.html</title>
-  <link rel="stylesheet" th:href="@{/css/variables.css}">
-  <link rel="stylesheet" th:href="@{/css/base.css}">
-</head>
-<body>
-<div class="layout">
-  <nav class="sidebar">
-    <div class="sidebar-title">편의점 시스템<br>본사</div>
-    <ul class="menu-group-title">
-      <li><a th:href="@{/main}">메인</a></li>
-      <li><a th:href="@{/board/goods}">상품관리</a></li>
-      <li><a th:href="@{/}">입출고 관리</a></li>
-      <li><a th:href="@{/board/notgoods}">상품폐기</a></li>
-      <li><a th:href="@{/}">재고현황</a></li>
-      <li><a th:href="@{/board/store}">가맹점관리</a></li>
-      <li><a th:href="@{/}">이력/통계></a></li>
-    </ul>
-    <div class="logout-area">
-      <a th:href="@{/}">로그아웃</a>
-    </div>
-  </nav>
-  <main class="main-content">
-    <div>
-      <div>
-      <h1>상품폐기</h1>
-      <br><h3>폐기목록</h3>
-    </div>
 
+
+
+
+<div th:replace="~{fragments/hqLayout::hqLayout(~{this::header},~{this::body})}"></div>
+
+<div th:fragment="header">
+    <p>상품폐기</p>
+    <p>폐기 대상 상품을 관리합니다.</p>
+</div>
+<div th:fragment="body">
+    <p>폐기 대상 상품</p>
   <table class="list">
     <thead>
     <tr>
@@ -42,16 +24,16 @@
       <td><a th:herf="">폐기</a></td>
     </tr>
     </thead>
-  <tbody>
+    <tbody>
     <tr th:if="${notgoodsList == null or notgoodsList.isEmpty()}">
-      <td colspan="7" style="text-align:center; padding:40px; color:var(--text-muted);">
+      <td colspan="5">
         등록된 상품이 없습니다.
       </td>
     </tr>
-  </tbody>
+    </tbody>
   </table>
-    </div>
-  </main>
+</div>
+</main>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -64,6 +46,7 @@
   });
 </script>
 
-</body>
+</div>
+
 
 </html>

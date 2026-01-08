@@ -1,51 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="hqLayout(layoutHeader,layoutBody)">
-    <head>
-        <meta charset="UTF-8">
-        <title>fragments/hqLayout.html</title>
-        <link rel="stylesheet" th:href="@{/css/variables.css}">
-        <link rel="stylesheet" th:href="@{/css/base.css}">
-        <link rel="stylesheet" th:href="@{/css/layout.css}">
-    </head>
-    <body>
-    <div id="layoutWrap">
-        <div id="sidebar">
-            <p id="sidebarHeaderP1">편의점 시스템</p>
-            <p id="sidebarHeaderP2">(본사)</p>
-            <hr>
-            <div id="sidebar-navigation">
-                <ul class="sidebar-list">
-                    <li class="sidebar-item"><a th:href="@{/test}">메인</a></li>
-                    <li class="sidebar-item"><a th:href="@{/product/productManagement}">상품관리</a></li>
-                    <li class="sidebar-item"><a th:href="@{/test}">입출고관리</a></li>
-                    <li class="sidebar-item"><a th:href="@{/test}">상품폐기</a></li>
-                    <li class="sidebar-item"><a th:href="@{/test}">재고현황</a></li>
-                    <li class="sidebar-item"><a th:href="@{/test}">가맹점관리</a></li>
-                    <li class="sidebar-item"><a th:href="@{/test}">이력/통계</a></li>
-                </ul>
+<div th:replace="~{fragments/hqLayout::hqLayout(~{this::header},~{this::body})}"></div>
+
+<div th:fragment="header">
+    <p>본사대시보드</p>
+    <p>전체 가맹점 현황을 한눈에 확인합니다.</p>
+</div>
+<div th:fragment="body">
+    <main id="layoutContent">
+        <div class="summary-grid">
+
+            <div class="btn">
+                <p><a th:href="@{/}">가맹점 수</a></p>
             </div>
-            <a th:href="@{/logout}" id="sidebarLogout">로그아웃</a>
+            <div class="btn">
+                <p><a th:href="@{/}">총 매출</a></p>
+            </div>
+            <div class="btn">
+                <p><a th:href="@{/}">총 재고</a></p>
+            </div>
+
+            <div class="btn">
+                <p><a th:href="@{/}">주의상품</a></p>
+            </div>
+
         </div>
-        <main id="layoutContent">
-            <div class="summary-grid">
-
-                <div class="btn">
-                    <p><a th:href="@{/}">가맹점 수</a></p>
-                </div>
-                <div class="btn">
-                    <p><a th:href="@{/}">총 매출</a></p>
-                </div>
-                <div class="btn">
-                    <p><a th:href="@{/}">총 재고</a></p>
-                </div>
-
-                <div class="btn">
-                    <p><a th:href="@{/}">주의상품</a></p>
-                </div>
-
-            </div>
-            <div class="summary-card">
+        <div class="summary-card">
             <div  class="alert-header">
                 <h2>알림</h2>
             </div>
@@ -59,11 +39,7 @@
                 <a href="@"></a>
                 <span>알림 제목</span>
             </ul>
-            </div>
-        </main>
-
-    </div>
-
-    </body>
-</th:block>
+        </div>
+    </main>
+</div>
 </html>
