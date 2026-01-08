@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/hqLayout::hqLayout(~{this::layoutHeader},~{this::layoutBody})}">
+    <div th:fragment="layoutHeader">
+        <p>상품 등록</p>
+        <p>새로운 상품을 등록합니다.</p>
+    </div>
+    <div th:fragment="layoutBody">
+        <style>
+            span{color: red; font-size: 0.8em}
+        </style>
+        <form method="post" th:action="@{/product/insert}" enctype="multipart/form-data" th:object="${producRequestDto}">
+            <div style="margin: 1em 0em;">
+                <h4>상품 기본 정보</h4>
+                <hr>
+                <label>
+                    <p>바코드</p>
+                    <input type="text" id="barcode" placeholder="바코드를 입력하세요(예:88012345678901)" onchange="getProductInfo()" th:field="*{barcode}">
+                    <span th:if="${#fields.hasErrors('barcode')}" th:errors="*{barcode}"></span>
+                </label>
+                <label>
+                    <p>상품명</p>
+                    <input type="text" placeholder="바코드 입력 시 자동으로 나타납니다." id="productName" name="product_name" th:field="*{product_name}">
+                </label>
+                <label>
+                    <p>카테고리</p>
+                    <select id="parentCategory" name="parentCategory" style="width: 100px">
+                        <option th:each="l:${list}" th:value="${l.category_name}" th:text="${l.category_name}"></option>
+                    </select>
+                    <select id="childCategory" style="width: 100px">
+                    </select>
+                    </select>
+                    <select id="subCategory" name="category_name" style="width: 100px" th:field="*{category_name}">
+                    </select>
+                    <span th:if="${#fields.hasErrors('category_name')}" th:errors="*{category_name}"></span>
+                </label>
+                <label>
+                    <p>상품이미지</p>
+                   <input type="file" id="img" name="file1">
+                    <span>[[${err}]]</span>
+                </label>
+            </div>
+            <div style="margin: 2em 0em">
+                <h4>판매 정보</h4>
+                <hr>
+                <label>
+                    <p>판매가격</p>
+                    <input type="text" placeholder="판매가격을 입력하세요" th:field="*{hq_supply_price}">
+                    <span th:if="${#fields.hasErrors('hq_supply_price')}" th:errors="*{hq_supply_price}"></span>
+                </label>
+                <label>
+                    <p>안전재고 수량</p>
+                    <input type="number" placeholder="최소 재고수량을 입력하세요" th:field="*{safety_stock}">
+                    <span th:if="${#fields.hasErrors('safety_stock')}" th:errors="*{safety_stock}"></span>
+                </label>
+            </div>
+            <input type="submit" value="등록">
+            <button><a th:href="@{/product/productManagement}">취소</a></button>
+        </form>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function getProductInfo() {
+                const barcode = document.getElementById("barcode");
+                fetch(`/product/barcodeExist?barcode=${barcode.value}`)
+                    .then(resp=>resp.text())
+                    .then(data=>{
+                        if(data==="true"){
+                            alert("이미 존재하는 상품입니다.");
+                            barcode.value="";
+                            barcode.focus();
+                            return;
+                        }else{fetch(`/product/productInfo/${barcode.value}`)
+                            .then(resp => resp.json())
+                            .then(data => {
+                                if(data && data.I2570 && data.I2570.row && data.I2570.row.length>0){
+                                    let info = data.I2570.row[0];
+                                    document.getElementById("productName").value = info.PRDT_NM;
+                                } else {
+                                    alert("등록되지 않은 바코드입니다.")
+                                    document.getElementById("productName").value = "";
+                                }
+                            })
+                        }
+                    })
+            }
+            /*]]>*/
+
+            function updateCategory() {
+                if (!parentCategory || parentCategory === "") return;
+                fetch(`/product/childCategory?parentCategory=${parentCategory.value}`)
+                    .then(resp => resp.json())
+                    .then(data => {
+                        let opt = "";
+                        const childCategory = document.getElementById("childCategory");
+                        data.forEach(i => {
+                            opt += `<option value='${i.childCategoryName}'>${i.childCategoryName}</option>`
+                        })
+                        childCategory.innerHTML = opt
+                        updateSubCategory();
+                    })
+            }
+
+            function updateSubCategory(){
+                if(!childCategory || childCategory==="") return
+                fetch(`/product/subCategory?childCategory=${childCategory.value}`)
+                    .then(resp=>resp.json())
+                    .then(data=>{
+                        let opt="";
+                        console.log(data)
+                        data.forEach(i=>{
+                            opt+=`<option value="${i.subCategoryName}">${i.subCategoryName}</option>`
+                        })
+                        subCategory.innerHTML=opt;
+                    })
+            }
+
+            if(parentCategory) {
+                updateCategory();
+                parentCategory.addEventListener('change',updateCategory)
+            }
+            if(childCategory) {
+                childCategory.addEventListener('change',updateSubCategory)
+            }
+
+            (function(){
+                const msg=[[${result}]]
+                if(msg!=null && msg!="" &&msg.includes("완료") ){
+                    alert(msg)
+                }
+            })();
+        </script>
+    </div>
+</div>
+
+</html>

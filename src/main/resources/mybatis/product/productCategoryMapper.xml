@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.product.ProductCategoryMapper">
+    <select id="childCategorySearch" resultType="ProductCategoryRequestDto" parameterType="string">
+        select child.category_id,parent.category_name parentCategoryName,
+        child.category_name childCategoryName
+        from category child
+        inner join category parent
+        on child.parent_id=parent.category_id
+        where parent.category_name=#{value}
+    </select>
+
+    <select id="subCategorySearch" resultType="ProductCategoryRequestDto" parameterType="string">
+        select sub.category_id, child.category_name childCategoryName,
+        sub.category_name subCategoryName
+        from category sub
+        inner join category child
+        on sub.parent_id=child.category_id
+        inner join category parent
+        on child.parent_id=parent.category_id
+        where child.category_name=#{value}
+    </select>
+
+    <select id="parentCategorySearch" resultType="ProductParentCategoryRequestDto">
+        select category_id,category_name from category where parent_id is null
+    </select>
+
+    <select id="searchCategoryId" parameterType="String">
+        select category_id from category where category_name=#{value}
+    </select>
+
+    <select id="searchCategoryName" parameterType="int">
+        select count(*) from category where category_id=#{value}
+    </select>
+
+
+</mapper>

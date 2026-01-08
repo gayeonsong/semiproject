@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.product.ProductManagementMapper">
+    <insert id="insert" parameterType="ProductManagementDto">
+        <selectKey order="BEFORE" resultType="int" keyProperty="product_id">
+            select seq_product.nextval from dual
+        </selectKey>
+        insert into product values(#{product_id},#{barcode},#{category_id},#{product_name},#{image_path},#{safety_stock},#{hq_supply_price})
+    </insert>
+
+    <select id="selectAll" resultType="ProductManagementListDto" parameterType="map">
+        select * from
+        (
+        <include refid="selectProductDetailInfo"></include>
+        )
+        <![CDATA[where rnum>=#{startrow} and rnum<=#{endrow}]]>
+    </select>
+
+    <select id="selectItem" resultType="ProductManagementListDto" parameterType="int">
+        <include refid="selectProductDetailInfo"></include>
+        where p.product_id=#{value}
+    </select>
+
+    <sql id="selectProductDetailInfo">
+        <![CDATA[
+              select p.product_id, p.barcode, p.category_id, p.product_name, p.image_path, p.safety_stock, p.hq_supply_price ,c.category_name,parentCategoryName, childCategoryName, NVL(i.hq_quantity,0) hq_quantity,
+              Case
+                when NVL(i.hq_quantity,0)=0 then '품절'
+                when NVL(i.hq_quantity,0)<p.safety_stock then '부족'
+                else '정상'
+              end as status, row_Number() over(order by p.product_id asc) rnum
+                from product p
+                left join category c
+                on p.category_id=c.category_id
+                left join
+                    (
+                    select sub.category_id subCategoryId,
+                    child.category_name childCategoryName,parent.category_name parentCategoryName,sub.category_name subCategoryName
+                    from category sub
+                    inner join category child
+                    on sub.parent_id=child.category_id
+                    inner join category parent
+                    on child.parent_id=parent.category_id
+                    )
+                on c.category_name=subCategoryName
+                left join product_batch b
+                on b.product_id=p.product_id
+                left join hq_inventory i
+                on b.batch_id=i.batch_id        
+        ]]>
+    </sql>
+
+    <select id="barcodeExist" parameterType="string" >
+        select product_id from product where barcode=#{value}
+    </select>
+
+    <select id="selectRowCount" resultType="int">
+        select count(*) from product
+    </select>
+</mapper>
