@@ -5,6 +5,7 @@ import com.example.demo.service.product.ProductCategoryService;
 import com.example.demo.service.product.ProductManagementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,8 @@ public class ProductInsertController {
     private final ProductCategoryService service;
     private final ProductManagementService productService;
     private final String UPLOADPATH="c:\\web\\spring\\upload\\";
+    @Value("${openai.api.key}")
+    private String apiKey;
 
     @GetMapping("/product/productInsert")
     public String product(Model model){
@@ -37,9 +40,9 @@ public class ProductInsertController {
     @ResponseBody
     public String getInfo(@PathVariable("barcode") String barcode){
         try {
-            System.out.println(barcode);
             String url = "http://openapi.foodsafetykorea.go.kr/api" +
-                    "/08b1eff615c34aa59a97/I2570/json/1/1/BRCD_NO=" + barcode;
+                    "/"+apiKey+"/I2570/json/1/1/BRCD_NO=" + barcode;
+            System.out.println(url);
             RestTemplate restTemplate = new RestTemplate();
             ;
             String data = restTemplate.getForObject(url, String.class);
