@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NotgoodsMapper">
+    <insert id="insertDiscard" parameterType="DiscardListDTO">
+        insert into discard (discard_id,batch_id,discard_qty,discard_date)
+        values (discard_seq.NEXTVAL,#{batchId},#{discardQty},current_date)
+    </insert>
+
+    <update id="updateDiscard" parameterType="map">
+        update hq_inventory
+        set hq_quantity = hq_quantity-#{discardQty}
+        where batch_id = #{batchId}
+    </update>
+
+    <!--수업시간에 배운 방식으로 하면 실수로 눌러도 DB에서 데이터가 완전히 사라지지만
+      이 delete는 재고가 0이 되면 자동으로 삭제하는 방식 사용자가 삭제를 요청하는게 아님-->
+    <delete id="deleteDiscard" parameterType="int">
+        delete from hq_inventory
+        where batch_id=#{batchId} and hq_quantity &lt;=0
+    </delete>
+    <select id="selectDiscardList" resultType="DiscardListDTO">
+        select p.product_name as productName,
+        sum(d.discard_qty) as discardQty
+        from discard d
+        join product_batch b on d.discard_id = b.batch_id
+        join product p on b.product_id= p.product_id
+        group by p.product_name
+        order by sum(d.discard_qty) desc
+    </select>
+    <select id="selectInventory" resultType="DiscardDTO">
+        select p.product_name as productName,
+        c.category_name as categoryName,
+        i.hq_quantity as hqQuantity,
+        b.inbound_date as inboundDate
+        from hq_inventory i
+        join product_batch b on d.discard_id=b.batch_id
+        join product p on b.product_id = p.product_id
+        join category c on p.category_id=c.category_id
+        order by b.inbound_date desc
+    </select>
+</mapper>

@@ -18,14 +18,16 @@
       <th>상품명</th> <th>카테고리</th> <th>수량</th> <th>등록일</th><th>폐기</th>
     </tr>
 
-    <tr th:each="notgoods:${notgoodsList}">
-      <td th:text="${notgood}"></td>
-      <td th:text="${notgood}"></td>
-      <td><a th:herf="">폐기</a></td>
+    <tr th:each="discard:${discardlist}">
+      <td th:text="${productName}"></td>
+      <td th:text="${coategoryName}"></td>
+      <td th:text="${hqQuantity}"></td>
+      <td th:text="${inboundDate}"></td>
+      <td><a th:herf="@{/delect/}">폐기</a></td>
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${notgoodsList == null or notgoodsList.isEmpty()}">
+    <tr th:if="${discardlist == null or discardlist.isEmpty()}">
       <td colspan="5">
         등록된 상품이 없습니다.
       </td>
@@ -33,8 +35,8 @@
     </tbody>
   </table>
 </div>
-</main>
-</div>
+
+<div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function (){

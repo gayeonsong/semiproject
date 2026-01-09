@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:replace="~{fragments/hqLayout::hqLayout(~{this::header},~{this::body})}"></div>
+<div th:replace="~{fragments/hqLayout::hqLayout(~{this::header},~{this::body})}">
+
 
 <div th:fragment="header">
     <p>본사대시보드</p>
@@ -8,32 +9,32 @@
 </div>
 <div th:fragment="body">
     <main id="layoutContent">
-        <div class="summary-grid">
+        <div>
 
-            <div class="btn">
+            <div>
                 <p><a th:href="@{/}">가맹점 수</a></p>
             </div>
-            <div class="btn">
+            <div>
                 <p><a th:href="@{/}">총 매출</a></p>
             </div>
-            <div class="btn">
+            <div>
                 <p><a th:href="@{/}">총 재고</a></p>
             </div>
 
-            <div class="btn">
+            <div>
                 <p><a th:href="@{/}">주의상품</a></p>
             </div>
 
         </div>
-        <div class="summary-card">
-            <div  class="alert-header">
+        <div>
+            <div>
                 <h2>알림</h2>
             </div>
             <div>
                 <!--알림이 없는 상태-->
                 <p>현재 알림정보가 없습니다.</p>
             </div>
-            <ul class="list">
+            <ul>
                 <!--알람이 있을 경우-->
                 <li th:each="notification : ${notifications}"></li>
                 <a href="@"></a>
@@ -41,5 +42,6 @@
             </ul>
         </div>
     </main>
+</div>
 </div>
 </html>

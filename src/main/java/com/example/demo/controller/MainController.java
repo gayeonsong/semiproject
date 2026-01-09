@@ -13,7 +13,7 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(Model model){
-          return "board/main";
+          return "/board/main";
     }
 
 

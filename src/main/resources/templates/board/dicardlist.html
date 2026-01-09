@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/hqLayout::hqLayout(~{this::header},~{this::body})}"></div>
+<link rel="stylesheet"  th:href="@{/css/variables.css}">
+<link rel="stylesheet"  th:href="@{/css/base.css}">
+<div th:fragment="header">
+  <p>폐기이력</p>
+  <p>폐기된 이력들을 볼 수 있습니다.</p>
+</div>
+<div th:fragment="body">
+  <main id="layoutContent">
+    <div class="summary-grid">
+
+      <div class="btn">
+        <p><a th:href="@{/}">폐기번호</a></p>
+      </div>
+      <div class="btn">
+        <p><a th:href="@{/}">배치번호</a></p>
+      </div>
+      <div class="btn">
+        <p><a th:href="@{/}">폐기수량</a></p>
+      </div>
+      <div class="btn">
+        <p><a th:href="@{/}">폐기일자</a></p>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+</html>

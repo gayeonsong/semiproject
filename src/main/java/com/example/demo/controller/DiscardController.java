@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequiredArgsConstructor
-public class NotGoodsController {
+public class DiscardController {
 
 
 
-@GetMapping("/board/notgoods")
+@GetMapping("/board/discard")
 public String list(){
-    return ("board/notgoods");
+    return ("board/discard");
 }
 
 }
