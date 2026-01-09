@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DiscardListService {
     private final DiscardListMapper mapper;
-//    public DiscardListDTO list(int discardId,int batchId,int discardQty,String discardDate){
-//
-//    }
+    public int insertDiscard(DiscardListDTO dto){
+        return mapper.insertDiscard(dto);
+    }
 
 }
 
